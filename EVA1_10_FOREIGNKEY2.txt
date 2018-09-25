@@ -1,0 +1,102 @@
+mysql-sql> use prueba;
+Query OK, 0 rows affected (0.00 sec)
+mysql-sql> show tables;
++------------------+
+| Tables_in_prueba |
++------------------+
+| carrera          |
+| clientes         |
+| compras          |
+| estudiante       |
+| factura          |
+| horario          |
+| jobs             |
+| materia          |
+| nueva_carrera    |
+| nueva_carrerilla |
+| paises2          |
+| personal         |
+| personal2        |
+| productos        |
++------------------+
+14 rows in set (0.00 sec)
+mysql-sql> desc factura;
++------------+----------+------+-----+---------+----------------+
+| Field      | Type     | Null | Key | Default | Extra          |
++------------+----------+------+-----+---------+----------------+
+| no_factura | int(11)  | NO   | PRI | null    | auto_increment |
+| fechaC     | datetime | YES  |     | null    |                |
+| no_cliente | int(11)  | YES  |     | null    |                |
++------------+----------+------+-----+---------+----------------+
+3 rows in set (0.02 sec)
+mysql-sql> create table compras (
+	... Nombre varchar (50),
+        ... Fecha datetime,
+        ... cantidad float);
+ERROR: 1050 (42S01): Table 'compras' already exists
+
+mysql-sql> desc compras
+mysql-sql> desc compras;
++---------------+-------------+------+-----+---------------------+-------+
+| Field         | Type        | Null | Key | Default             | Extra |
++---------------+-------------+------+-----+---------------------+-------+
+| nombreCliente | varchar(50) | NO   |     |                     |       |
+| fecha         | datetime    | NO   |     | 0000-00-00 00:00:00 |       |
+| cantidad      | float       | YES  |     | null                |       |
++---------------+-------------+------+-----+---------------------+-------+
+3 rows in set (0.02 sec)
+
+mysql-sql> create table factura_detalles (
+       ... clave int auto_increment primary key,
+       ... No_factura int,
+       ... No_producto int,
+       ... cantidad int,
+       ... descuento float,
+       ... foreign key (No_factura) references factura (No_factura), foreign key (No_producto) references productos (No_producto));
+Query OK, 0 rows affected (0.01 sec)
+
+mysql-sql> desc productos;
++-------------+-------------+------+-----+---------+----------------+
+| Field       | Type        | Null | Key | Default | Extra          |
++-------------+-------------+------+-----+---------+----------------+
+| no_producto | int(11)     | NO   | PRI | null    | auto_increment |
+| nombre      | varchar(50) | YES  |     | null    |                |
+| prrecio     | float       | YES  |     | null    |                |
++-------------+-------------+------+-----+---------+----------------+
+3 rows in set (0.02 sec)
+
+mysql-sql> insert into productos (Nombre, Prrecio)
+       ... values ('Manzana', 15),
+       ... ('Pera', 20),
+       ... ('Cocos', 30),
+       ... ('Platanos', 30);
+Query OK, 4 rows affected (0.00 sec)
+
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql-sql> create table factura_detalles (
+       ... clave int auto_increment primary key,
+       ... No_factura int,
+       ... No_producto int,
+       ... cantidad int,
+       ... descuento float,
+       ... precio float,
+       ... foreign key (No_factura) references factura (No_factura) on update cascade on delete cascade,
+       ... foreign key (No_producto) references productos (No_producto));
+Query OK, 0 rows affected (0.01 sec)
+
+MySQL  localhost:3306 ssl  evaluacion_1  SQL > drop table factura_detalles;
+Query OK, 0 rows affected (0.4266 sec)
+
+
+mysql-sql> insert into factura_detalles (No_factura, No_producto, cantidad, precio)
+                                            ... values (3, 1, 100, 15), (2, 3, 20, 20), (3, 3, 50, 35);
+ERROR: 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`evaluacion_1`.`factura_detalles`, CONSTRAINT `factura_detalles_ibfk_1` FOREIGN KEY (`No_factura`) REFERENCES `factura` (`no_factura`) ON DELETE CASCADE ON UPDATE CASCADE)
+mysql-sql> insert into factura_detalles (No_factura, No_producto, cantidad, precio) values (3, 1, 100, 15), (3, 2, 20, 20), (3, 3, 50, 35);
+ERROR: 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`evaluacion_1`.`factura_detalles`, CONSTRAINT `factura_detalles_ibfk_1` FOREIGN KEY (`No_factura`) REFERENCES `factura` (`no_factura`) ON DELETE CASCADE ON UPDATE CASCADE)
+
+mysql-sql> insert into factura_detalles (No_factura, No_producto, cantidad, precio) values (3, 1, 100, 15), (3, 2, 20, 20), (3, 3, 50, 30);
+ERROR: 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`evaluacion_1`.`factura_detalles`, CONSTRAINT `factura_detalles_ibfk_1` FOREIGN KEY (`No_factura`) REFERENCES `factura` (`no_factura`) ON DELETE CASCADE ON UPDATE CASCADE)
+
+mysql-sql> insert into factura_detalles (No_factura, No_producto, cantidad, precio) values (3, 1, 100, 15), (3, 2, 20, 20), (3, 3, 50, 30);
+ERROR: 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`evaluacion_1`.`factura_detalles`, CONSTRAINT `factura_detalles_ibfk_1` FOREIGN KEY (`No_factura`) REFERENCES `factura` (`no_factura`) ON DELETE CASCADE ON UPDATE CASCADE)

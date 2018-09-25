@@ -1,0 +1,97 @@
+mysql-sql> use prueba;
+Query OK, 0 rows affected (0.00 sec)
+mysql-sql> select * from estudiante
+       ... ;
+Empty set (0.02 sec)
+mysql-sql> show tables;
++------------------+
+| Tables_in_prueba |
++------------------+
+| carrera          |
+| estudiante       |
+| horario          |
+| jobs             |
+| materia          |
+| nueva_carrera    |
+| nueva_carrerilla |
+| paises2          |
+| personal         |
+| personal2        |
++------------------+
+10 rows in set (0.00 sec)
+mysql-sql> alter table estudiantes add constraint primary key (NoControl);
+ERROR: 1146 (42S02): Table 'prueba.estudiantes' doesn't exist
+mysql-sql> alter table estudiante add constraint primary key (NoControl);
+Query OK, 0 rows affected (0.03 sec)
+
+Records: 0  Duplicates: 0  Warnings: 0
+mysql-sql> alter table materia add constraint primary key (nombre, semestre);
+ERROR: 1068 (42000): Multiple primary key defined
+mysql-sql> desc materia;
++-----------+------------------+------+-----+---------+----------------+
+| Field     | Type             | Null | Key | Default | Extra          |
++-----------+------------------+------+-----+---------+----------------+
+| idmateria | int(10) unsigned | NO   | PRI | null    | auto_increment |
+| nombre    | varchar(45)      | NO   |     |         |                |
+| creditos  | varchar(45)      | NO   |     |         |                |
++-----------+------------------+------+-----+---------+----------------+
+3 rows in set (0.01 sec)
+mysql-sql> alter table add int semestre into materia;
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'add int semestre into materia' at line 1
+mysql-sql> alter table materia add constraint primary key (nombre, semestre);
+ERROR: 1068 (42000): Multiple primary key defined
+mysql-sql> create table compras (
+       ... nombreCliente varchar(),
+       ... fecha datetime,
+       ... cantidad float);
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '),
+fecha datetime,
+cantidad float)' at line 2
+mysql-sql> create table compras (
+       ... nombreCliente varchar(50),
+       ... fecha datetime,
+       ... cantidad float,
+       ... primary key(nombreCliente, fecha));
+Query OK, 0 rows affected (0.01 sec)
+mysql-sql> desc compras;
++---------------+-------------+------+-----+---------------------+-------+
+| Field         | Type        | Null | Key | Default             | Extra |
++---------------+-------------+------+-----+---------------------+-------+
+| nombreCliente | varchar(50) | NO   | PRI |                     |       |
+| fecha         | datetime    | NO   | PRI | 0000-00-00 00:00:00 |       |
+| cantidad      | float       | YES  |     | null                |       |
++---------------+-------------+------+-----+---------------------+-------+
+3 rows in set (0.01 sec)
+mysql-sql> desc materia;
++-----------+------------------+------+-----+---------+----------------+
+| Field     | Type             | Null | Key | Default | Extra          |
++-----------+------------------+------+-----+---------+----------------+
+| idmateria | int(10) unsigned | NO   | PRI | null    | auto_increment |
+| nombre    | varchar(45)      | NO   |     |         |                |
+| creditos  | varchar(45)      | NO   |     |         |                |
+| semestre  | int(10) unsigned | NO   | PRI |         |                |
++-----------+------------------+------+-----+---------+----------------+
+4 rows in set (0.01 sec)
+mysql-sql> alter table drop primary key;
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'drop primary key' at line 1
+mysql-sql> alter table compras drop primary key;
+Query OK, 2 rows affected (0.02 sec)
+
+Records: 2  Duplicates: 0  Warnings: 0
+mysql-sql> alter table carrera add constraint primary key (nombre, area);
+ERROR: 1062 (23000): Duplicate entry 'sistemas-sistemas y computacion' for key 1
+mysql-sql> drop * from carrera;
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '* from carrera' at line 1
+mysql-sql> delete * from carrera;
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '* from carrera' at line 1
+mysql-sql> alter table carrera add constraint primary key (nombre, area);
+Query OK, 0 rows affected (0.02 sec)
+
+Records: 0  Duplicates: 0  Warnings: 0
+mysql-sql> alter table paises2 drop primary key;
+ERROR: 1075 (42000): Incorrect table definition; there can be only one auto column and it must be defined as a key
+mysql-sql> alter table paises2 drop primary key;
+ERROR: 1075 (42000): Incorrect table definition; there can be only one auto column and it must be defined as a key
+mysql-sql> alter table personal drop primary key;
+ERROR: 1091 (42000): Can't DROP 'PRIMARY'; check that column/key exists
+mysql-sql> alter table personal2 drop primary key;

@@ -1,0 +1,127 @@
+use prueba' at line 1
+mysql-sql> use prueba;
+Query OK, 0 rows affected (0.00 sec)
+mysql-sql> create table factura (int auto_increment primary key,
+       ... fechaC datetime,
+       ... no_cliente int,
+       ...
+       ... );
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'int auto_increment primary key,
+fechaC datetime,
+no_cliente int,
+)' at line 1
+mysql-sql> create table clientes(
+       ... no_Cliente int auto_increment primary key,
+       ... nombre varchar(50),
+       ... apellido varchar(50),
+       ... RFC varchar(13),
+       ... direccion varchar(100),
+       ... no_telefono varchar(50),
+       ... celular varchar(50));
+Query OK, 0 rows affected (0.02 sec)
+mysql-sql> create table productos(
+       ... no_producto int auto_increment primary key,
+       ... nombre varchar(50),
+       ... prrecio float);
+Query OK, 0 rows affected (0.02 sec)
+mysql-sql> create table factura(
+       ... no_factura int auto_increment primary key,
+       ... fechaC datetime,
+       ... no_cliente int,
+       ... references Clientes(no_Clientes) on delete restrict on update cascade);
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'references Clientes(no_Clientes) on delete restrict on update cascade)' at line 5
+mysql-sql> create table factura(
+       ... no_factura int auto_increment primary key,
+       ... fechaC datetime,
+       ... no_cliente int references Clientes(no_Clientes) on delete restrict on update cascade);
+Query OK, 0 rows affected (0.02 sec)
+mysql-sql> insert into clientes(nombre, apellido) values('juan' , 'perez');
+Query OK, 1 row affected (0.00 sec)
+mysql-sql> select * from clientes;
++------------+--------+----------+------+-----------+-------------+---------+
+| no_Cliente | nombre | apellido | RFC  | direccion | no_telefono | celular |
++------------+--------+----------+------+-----------+-------------+---------+
+|          1 | juan   | perez    | null | null      | null        | null    |
++------------+--------+----------+------+-----------+-------------+---------+
+1 row in set (0.00 sec)
+mysql-sql> desc facturas;
+ERROR: 1146 (42S02): Table 'prueba.facturas' doesn't exist
+mysql-sql> show tables;
++------------------+
+| Tables_in_prueba |
++------------------+
+| carrera          |
+| clientes         |
+| compras          |
+| estudiante       |
+| factura          |
+| horario          |
+| jobs             |
+| materia          |
+| nueva_carrera    |
+| nueva_carrerilla |
+| paises2          |
+| personal         |
+| personal2        |
+| productos        |
++------------------+
+14 rows in set (0.00 sec)
+mysql-sql> desc factura;
++------------+----------+------+-----+---------+----------------+
+| Field      | Type     | Null | Key | Default | Extra          |
++------------+----------+------+-----+---------+----------------+
+| no_factura | int(11)  | NO   | PRI | null    | auto_increment |
+| fechaC     | datetime | YES  |     | null    |                |
+| no_cliente | int(11)  | YES  |     | null    |                |
++------------+----------+------+-----+---------+----------------+
+3 rows in set (0.02 sec)
+mysql-sql> insert into factura(fechaC, no_cliente) values('2018-09-12' , 1);
+Query OK, 1 row affected (0.00 sec)
+mysql-sql> insert into factura(fechaC, no_cliente) values('2018-09-12' ,2);
+Query OK, 1 row affected (0.00 sec)
+mysql-sql> select * from factura;
++------------+--------------------+------------+
+| no_factura | fechaC             | no_cliente |
++------------+--------------------+------------+
+|          1 | 2018-00-00 0:00:00 |          1 |
+|          2 | 2018-00-00 0:00:00 |          2 |
++------------+--------------------+------------+
+2 rows in set (0.00 sec)
+mysql-sql> update clientes
+       ... set
+       ... no_cliente = 5
+       ... where no_clientes = 1;
+ERROR: 1054 (42S22): Unknown column 'no_clientes' in 'where clause'
+mysql-sql> update clientes
+       ... set
+       ... no_cliente = 5
+       ... where no_clientes = 1;
+ERROR: 1054 (42S22): Unknown column 'no_clientes' in 'where clause'
+mysql-sql> update clientes
+       ... set
+       ... no_cliente = 5
+       ... where no_cliente = 1;
+Query OK, 1 row affected (0.00 sec)
+
+Rows matched: 1  Changed: 1  Warnings: 0
+mysql-sql> select * from clientes;
++------------+--------+----------+------+-----------+-------------+---------+
+| no_Cliente | nombre | apellido | RFC  | direccion | no_telefono | celular |
++------------+--------+----------+------+-----------+-------------+---------+
+|          5 | juan   | perez    | null | null      | null        | null    |
++------------+--------+----------+------+-----------+-------------+---------+
+1 row in set (0.00 sec)
+mysql-sql> alter table factura
+       ... add constraint foreign key (no_cliente)
+       ... references Clientes(no_Clientes) on delete restrict on update cascade;
+ERROR: 1005 (HY000): Can't create table '.\prueba\#sql-19a4_23.frm' (errno: 150)
+mysql-sql> delete * from factura;
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '* from factura' at line 1
+mysql-sql> delete from factura;
+Query OK, 2 rows affected (0.00 sec)
+mysql-sql> alter table factura
+       ... add constraint foreign key (no_cliente)
+       ... references Clientes(no_Clientes) on delete restrict on update cascade;
+ERROR: 1005 (HY000): Can't create table '.\prueba\#sql-19a4_23.frm' (errno: 150)
+mysql-sql> no_cliente = 5
+

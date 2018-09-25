@@ -1,0 +1,136 @@
+mysql> create table paises(
+    -> clave int not null primary key auto_increment,
+    -> nombre varchar(50) not null unique,
+    -> poblacion default 1,
+    -> continente enum ('Africa', 'America', 'Asia' ,'Oceania', 'Europa'));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'default 1,
+continente enum ('Africa', 'America', 'Asia' ,'Oceania', 'Europa'))' at line 4
+mysql> create table paises(
+    -> clave int not null primary key auto_increment,
+    -> nombre varchar(50) not null unique,
+    -> poblacion default 1,
+    -> poblacion default 1,
+    -> nombre varchar(50) not null unique,;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'default 1,
+poblacion default 1,
+nombre varchar(50) not null unique,' at line 4
+mysql> create table paises(
+    -> clave int not null primary key auto_increment,
+    -> poblacion int default 1,
+    -> continente enum ('Africa', 'America', 'Asia' ,'Oceania', 'Europa'));
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> desc paises
+    -> ;
++------------+----------------------------------------------------+------+-----+---------+----------------+
+| Field      | Type                                               | Null | Key | Default | Extra          |
++------------+----------------------------------------------------+------+-----+---------+----------------+
+| clave      | int(11)                                            | NO   | PRI | NULL    | auto_increment |
+| poblacion  | int(11)                                            | YES  |     | 1       |                |
+| continente | enum('Africa','America','Asia','Oceania','Europa') | YES  |     | NULL    |                |
++------------+----------------------------------------------------+------+-----+---------+----------------+
+3 rows in set (0.01 sec)
+
+mysql> create table paises2(
+    -> clave int not null primary key auto_increment,
+    -> nombre varchar(50) not null unique,
+    -> poblacion int default 1,
+    -> continente enum ('Africa', 'America', 'Asia' ,'Oceania', 'Europa'));
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> desc paises2;
++------------+----------------------------------------------------+------+-----+---------+----------------+
+| Field      | Type                                               | Null | Key | Default | Extra          |
++------------+----------------------------------------------------+------+-----+---------+----------------+
+| clave      | int(11)                                            | NO   | PRI | NULL    | auto_increment |
+| nombre     | varchar(50)                                        | NO   | UNI |         |                |
+| poblacion  | int(11)                                            | YES  |     | 1       |                |
+| continente | enum('Africa','America','Asia','Oceania','Europa') | YES  |     | NULL    |                |
++------------+----------------------------------------------------+------+-----+---------+----------------+
+4 rows in set (0.01 sec)
+
+mysql> insert into paises (nombre , poblacion, continente) values('Mexico', 120000000, 'America');
+ERROR 1054 (42S22): Unknown column 'nombre' in 'field list'
+mysql> insert into paises2 (nombre , poblacion, continente) values('Mexico', 120000000, 'America');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> drop table paises;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> show tables;
++------------------+
+| Tables_in_prueba |
++------------------+
+| carrera          |
+| estudiante       |
+| horario          |
+| nueva_carrera    |
+| nueva_carrerilla |
+| paises2          |
+| personal         |
+| personal2        |
++------------------+
+8 rows in set (0.00 sec)
+
+mysql> select * from paises2;
++-------+--------+-----------+------------+
+| clave | nombre | poblacion | continente |
++-------+--------+-----------+------------+
+|     1 | Mexico | 120000000 | America    |
++-------+--------+-----------+------------+
+1 row in set (0.00 sec)
+
+mysql> insert into paises2 (nombre , poblacion, continente) values('Mexico', 120000000, 'America');
+ERROR 1062 (23000): Duplicate entry 'Mexico' for key 2
+mysql> select * from personal;
++-------+-------------+----------+--------------+---------+
+| clave | nombre      | apellido | departamento | salario |
++-------+-------------+----------+--------------+---------+
+|     1 |  sergio     | NULL     | NULL         |    NULL |
+|     2 | pedro       | Gonzales | sistemas     |   10000 |
+|     2 |  sergio     | NULL     | NULL         |    NULL |
+|     3 | jose        | NULL     | NULL         |    NULL |
+|     4 | peter       | NULL     | NULL         |    NULL |
+|     5 |  Sully      | NULL     | NULL         |    NULL |
+|     6 | Daniel      | NULL     | NULL         |    NULL |
+|     7 | chochoberto | NULL     | NULL         |    NULL |
++-------+-------------+----------+--------------+---------+
+8 rows in set (0.01 sec)
+
+mysql> delete from personal;
+Query OK, 8 rows affected (0.00 sec)
+
+mysql> alter table personal add rfc varchar(50) not null unique;
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> insert into personal (nombre , apellido, departamento, rfc) values ('juan' , 'Perez', 'Inhumanos', 'AAAA122556356');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into personal (nombre , apellido, departamento, rfc) values ('juan' , 'Perez', 'Inhumanos', 'AAAA122556356');
+ERROR 1062 (23000): Duplicate entry 'AAAA122556356' for key 1
+mysql> select * from personal;
++-------+--------+----------+--------------+---------+---------------+
+| clave | nombre | apellido | departamento | salario | rfc           |
++-------+--------+----------+--------------+---------+---------------+
+|  NULL | juan   | Perez    | Inhumanos    |    NULL | AAAA122556356 |
++-------+--------+----------+--------------+---------+---------------+
+1 row in set (0.00 sec)
+
+mysql> create table jobs(
+    -> job_id varchar(20),
+    -> job_title varchar(50) default '',
+    -> min_salary int default 8000,
+    -> max_salary in default 100000);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'in default 100000)' at line 5
+mysql> create table jobs(
+    -> job_id varchar(20),
+    -> job_title varchar(50) default '',
+    -> min_salary int default 8000,
+    -> max_salary int default 100000);
+Query OK, 0 rows affected (0.01 sec)
+
+mysql>
+
+
+

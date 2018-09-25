@@ -1,0 +1,212 @@
+mysql> use prueba;
+Database changed
+mysql> create table personal(
+    -> clave int,
+    -> nombre varchar(50),
+    -> apellido varchar(50),
+    -> departamento varchar(50);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 5
+mysql> create table personal(
+    -> clave int,
+    -> nombre varchar(50),
+    -> apellido varchar(50),
+    -> departamento varchar(50),
+    -> salario float);
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> desc personal;
++--------------+-------------+------+-----+---------+-------+
+| Field        | Type        | Null | Key | Default | Extra |
++--------------+-------------+------+-----+---------+-------+
+| clave        | int(11)     | YES  |     | NULL    |       |
+| nombre       | varchar(50) | YES  |     | NULL    |       |
+| apellido     | varchar(50) | YES  |     | NULL    |       |
+| departamento | varchar(50) | YES  |     | NULL    |       |
+| salario      | float       | YES  |     | NULL    |       |
++--------------+-------------+------+-----+---------+-------+
+5 rows in set (0.01 sec)
+
+mysql> insert into personal(clave, nombre ) values (1,' sergio');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into personal(2, 'pedro', ' );
+    '>
+    '> insert into personal(2, 'pedro', ' );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '2, 'pedro', ' );
+
+insert into personal(2, 'pedro', ' )' at line 1
+mysql> insert into personal(2, 'pedro', 'Gonzales','sistemas', 10000.02 );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '2, 'pedro', 'Gonzales','sistemas', 10000.02 )' at line 1
+mysql> insert into personal(2, 'pedro', 'Gonzales','sistemas', 10000 );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '2, 'pedro', 'Gonzales','sistemas', 10000 )' at line 1
+mysql> insert into personal values (2, 'pedro', 'Gonzales','sistemas', 10000 );
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into personal(clave, nombre ) values (2,' sergio'), (3,'jose'), (4,'peter');
+Query OK, 3 rows affected (0.00 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> insert into personal(clave, nombre ) values (5,' Sully'), (6,'Daniel'), (7,'chochoberto');
+Query OK, 3 rows affected (0.00 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> select * from personal;
++-------+-------------+----------+--------------+---------+
+| clave | nombre      | apellido | departamento | salario |
++-------+-------------+----------+--------------+---------+
+|     1 |  sergio     | NULL     | NULL         |    NULL |
+|     2 | pedro       | Gonzales | sistemas     |   10000 |
+|     2 |  sergio     | NULL     | NULL         |    NULL |
+|     3 | jose        | NULL     | NULL         |    NULL |
+|     4 | peter       | NULL     | NULL         |    NULL |
+|     5 |  Sully      | NULL     | NULL         |    NULL |
+|     6 | Daniel      | NULL     | NULL         |    NULL |
+|     7 | chochoberto | NULL     | NULL         |    NULL |
++-------+-------------+----------+--------------+---------+
+8 rows in set (0.00 sec)
+
+mysql> desc personal;
++--------------+-------------+------+-----+---------+-------+
+| Field        | Type        | Null | Key | Default | Extra |
++--------------+-------------+------+-----+---------+-------+
+| clave        | int(11)     | YES  |     | NULL    |       |
+| nombre       | varchar(50) | YES  |     | NULL    |       |
+| apellido     | varchar(50) | YES  |     | NULL    |       |
+| departamento | varchar(50) | YES  |     | NULL    |       |
+| salario      | float       | YES  |     | NULL    |       |
++--------------+-------------+------+-----+---------+-------+
+5 rows in set (0.01 sec)
+
+mysql> create table personal2(
+    -> clave int AUTO_INCREMENT,
+    -> nombre varchar(50 ) NOT NULL,
+    -> apellido varchar(50) NOT NULL,
+    -> departamento enum('sistemas', 'contabilidad', 'inhumanos'),
+    -> departamento enum('sistemas', 'contabilidad', 'inhumanos'),:;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ':' at line 6
+mysql> create table personal2(
+    -> clave int AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    -> nombre varchar(50 ) NOT NULL,
+    -> apellido varchar(50) NOT NULL,
+    -> departamento enum('sistemas', 'contabilidad', 'inhumanos'),
+    -> salario float DEFAULT 15000);
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> DESC PERSONAL2;
++--------------+---------------------------------------------+------+-----+---------+----------------+
+| Field        | Type                                        | Null | Key | Default | Extra          |
++--------------+---------------------------------------------+------+-----+---------+----------------+
+| clave        | int(11)                                     | NO   | PRI | NULL    | auto_increment |
+| nombre       | varchar(50)                                 | NO   |     |         |                |
+| apellido     | varchar(50)                                 | NO   |     |         |                |
+| departamento | enum('sistemas','contabilidad','inhumanos') | YES  |     | NULL    |                |
+| salario      | float                                       | YES  |     | 15000   |                |
++--------------+---------------------------------------------+------+-----+---------+----------------+
+5 rows in set (0.01 sec)
+
+mysql> alter table personal2 modify clave int not Null;
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc personal2;
++--------------+---------------------------------------------+------+-----+---------+-------+
+| Field        | Type                                        | Null | Key | Default | Extra |
++--------------+---------------------------------------------+------+-----+---------+-------+
+| clave        | int(11)                                     | NO   | PRI |         |       |
+| nombre       | varchar(50)                                 | NO   |     |         |       |
+| apellido     | varchar(50)                                 | NO   |     |         |       |
+| departamento | enum('sistemas','contabilidad','inhumanos') | YES  |     | NULL    |       |
+| salario      | float                                       | YES  |     | 15000   |       |
++--------------+---------------------------------------------+------+-----+---------+-------+
+5 rows in set (0.01 sec)
+
+mysql> insert into personal2 (nombre , apellido) values ('juanito', ' perez')
+    -> ;
+ERROR 1364 (HY000): Field 'clave' doesn't have a default value
+mysql> alter table personal2 modify clave int not Null Auto_increment;
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> insert into personal2 (nombre , apellido) values ('juanito', ' perez');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from personal2;
++-------+---------+----------+--------------+---------+
+| clave | nombre  | apellido | departamento | salario |
++-------+---------+----------+--------------+---------+
+|     1 | juanito |  perez   | NULL         |   15000 |
++-------+---------+----------+--------------+---------+
+1 row in set (0.00 sec)
+
+mysql> insert into personal2 (nombre , apellido, departamento, salario) values ('juanito', ' perez soso', 5000);
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> insert into personal2 (nombre , apellido, departamento, salario) values ('juanito', ' perez soso', 'x', 5000);
+ERROR 1265 (01000): Data truncated for column 'departamento' at row 1
+mysql> insert into personal2 (nombre , apellido, departamento, salario) values ('juanito', ' perez soso', 'sistemas', 5000);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from personal2;
++-------+---------+-------------+--------------+---------+
+| clave | nombre  | apellido    | departamento | salario |
++-------+---------+-------------+--------------+---------+
+|     1 | juanito |  perez      | NULL         |   15000 |
+|     2 | juanito |  perez soso | sistemas     |    5000 |
++-------+---------+-------------+--------------+---------+
+2 rows in set (0.00 sec)
+
+mysql> insert into personal2 (clave) values (3);
+ERROR 1364 (HY000): Field 'nombre' doesn't have a default value
+mysql> insert into personal2 (clave, nombre , apellido) values (3, '','');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into personal2 (clave, nombre , apellido) values (3, '','');
+ERROR 1062 (23000): Duplicate entry '3' for key 1
+mysql> insert into personal2 (nombre , apellido, departamento, salario) values ('juanito', ' perez soso', 'sistemas', 5000);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from personal2;
++-------+---------+-------------+--------------+---------+
+| clave | nombre  | apellido    | departamento | salario |
++-------+---------+-------------+--------------+---------+
+|     1 | juanito |  perez      | NULL         |   15000 |
+|     2 | juanito |  perez soso | sistemas     |    5000 |
+|     3 |         |             | NULL         |   15000 |
+|     4 | juanito |  perez soso | sistemas     |    5000 |
++-------+---------+-------------+--------------+---------+
+4 rows in set (0.00 sec)
+
+mysql> insert into personal2 (clave, nombre , apellido) values (7, '','');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into personal2 (nombre , apellido, departamento, salario) values ('juanito', ' perez soso', 'sistemas', 5000);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from personal2;
++-------+---------+-------------+--------------+---------+
+| clave | nombre  | apellido    | departamento | salario |
++-------+---------+-------------+--------------+---------+
+|     1 | juanito |  perez      | NULL         |   15000 |
+|     2 | juanito |  perez soso | sistemas     |    5000 |
+|     3 |         |             | NULL         |   15000 |
+|     4 | juanito |  perez soso | sistemas     |    5000 |
+|     7 |         |             | NULL         |   15000 |
+|     8 | juanito |  perez soso | sistemas     |    5000 |
++-------+---------+-------------+--------------+---------+
+6 rows in set (0.00 sec)
+
+mysql> create table pais(
+    -> clave int not null  AUTO_INCREMENT PRIMARY KEY ,
+    -> nombre varchar(50) not null;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 3
+mysql> create table pais(
+    -> clave int not null  AUTO_INCREMENT PRIMARY KEY ,
+    -> nombre varchar(50) not null,
+    -> poblacion varchar(50) default 1
+    -> comntinente enum('Asia', 'Africa', 'Europa', 'Oceania', 'America'));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'comntinente enum('Asia', 'Africa', 'Europa', 'Oceania', 'America'))' at line 5
+mysql> create table pais(
+    -> clave int not null  AUTO_INCREMENT PRIMARY KEY ,
+    -> nombre varchar(50) not null,
+    -> poblacion varchar(50) default 1
+    -> comntinente enum('Asia', 'Africa', 'Europa', 'Oceania', 'America')
+    -> );

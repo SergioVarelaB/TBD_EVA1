@@ -1,0 +1,192 @@
+MySQL Shell 8.0.12
+
+Copyright (c) 2016, 2018, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type '\help' or '\?' for help; '\quit' to exit.
+
+
+ MySQL  JS > \SQL
+SyntaxError: Unexpected token ILLEGAL
+
+ MySQL  JS > \sql
+Switching to SQL mode... Commands end with ;
+
+ MySQL  SQL > \connect -c root@localhost
+The -c option is deprecated, please use --mysql or -mc instead
+Creating a Classic session to 'root@localhost'
+Please provide the password for 'root@localhost': ****
+Save password for 'root@localhost:3306'? [Y]es/[N]o/Ne[v]er (default No): y
+Fetching schema names for autocompletion... Press ^C to stop.
+Your MySQL connection id is 2
+Server version: 5.5.61 MySQL Community Server (GPL)
+No default schema selected; type \use <schema> to set one.
+mysql-sql> use prueba2;
+Query OK, 0 rows affected (0.00 sec)
+mysql-sql> create table Materias(
+	... nombre varchar(50),
+        ... creditos int,
+        ... hr_teoricas int,
+        ... hr_pract int,
+        ... carrera varchar(3),
+        ... semestre int);
+Query OK, 0 rows affected (0.1135 sec)
+
+mysql-sql> show tables;
++------------------+
+| Tables_in_prueba |
++------------------+
+| materias         |
++------------------+
+1 row in set (0.0006 sec)
+
+mysql-sql> desc materia;
++-----------+------------------+------+-----+---------+----------------+
+| Field     | Type             | Null | Key | Default | Extra          |
++-----------+------------------+------+-----+---------+----------------+
+| idmateria | int(10) unsigned | NO   | PRI | null    | auto_increment |
+| nombre    | varchar(45)      | NO   |     |         |                |
+| creditos  | varchar(45)      | NO   |     |         |                |
+| semestre  | int(10) unsigned | NO   | PRI |         |                |
++-----------+------------------+------+-----+---------+----------------+
+4 rows in set (0.02 sec)
+
+mysql-sql> create table Estudiantes(
+	... nombre varchar(7),
+        ... apellido varchar(45),
+        ... NoControl varchar(45),
+        ... carrera varchar(100));
+Query OK, 0 rows affected (0.0428 sec)
+mysql-sql> desc estudiante;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| nombre    | varchar(7)  | YES  |     | null    |       |
+| apellido  | varchar(45) | NO   |     |         |       |
+| NoControl | varchar(45) | NO   | PRI |         |       |
+| Carrera   | varchar(45) | NO   |     |         |       |
++-----------+-------------+------+-----+---------+-------+
+4 rows in set (0.03 sec)
+
+mysql-sql> show tables;
++------------------------+
+| Tables_in_evaluacion_1 |
++------------------------+
+| estudiantes            |
+| materias               |
++------------------------+
+2 rows in set (0.0006 sec)
+mysql-sql > create temporary table Temporal(
+	... nombre varchar(50));
+Query OK, 0 rows affected (0.3041 sec)
+
+mysql-sql> show tables;
++------------------------+
+| Tables_in_evaluacion_1 |
++------------------------+
+| estudiantes            |
+| materias               |
++------------------------+
+2 rows in set (0.0005 sec)
+
+mysql-sql> select * from estudiantes;
+Empty set (0.0003 sec)
+
+mysql-sql> select * from temporal;
+Empty set (0.0002 sec)
+
+mysql-sql> create table condenada(
+       ... no_por_favor int);
+Query OK, 0 rows affected (0.02 sec)
+
+mysql-sql> show tables;
++------------------------+
+| Tables_in_prueba       |
++------------------------+
+| condenada              |
+| estudiantes            |
+| materias               |
++------------------------+
+3 rows in set (0.0006 sec)
+
+mysql-sql> drop table condenada;
+Query OK, 0 rows affected (0.0211 sec)
+
+mysql-sql> show tables;
++------------------------+
+| Tables_in_evaluacion_1 |
++------------------------+
+| estudiantes            |
+| materias               |
++------------------------+
+2 rows in set (0.0005 sec)
+
+mysql-sql> desc estudiante;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| nombre    | varchar(7)  | YES  |     | null    |       |
+| apellido  | varchar(45) | NO   |     |         |       |
+| NoControl | varchar(45) | NO   | PRI |         |       |
+| Carrera   | varchar(45) | NO   |     |         |       |
++-----------+-------------+------+-----+---------+-------+
+4 rows in set (0.01 sec)
+
+mysql-sql> alter table estudiante add column
+       ... no_tel varchar(50);
+Query OK, 0 rows affected (0.03 sec)
+
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql-sql> desc estudiante
+       ... ;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| nombre    | varchar(7)  | YES  |     | null    |       |
+| apellido  | varchar(45) | NO   |     |         |       |
+| NoControl | varchar(45) | NO   | PRI |         |       |
+| Carrera   | varchar(45) | NO   |     |         |       |
+| no_tel    | varchar(50) | YES  |     | null    |       |
++-----------+-------------+------+-----+---------+-------+
+5 rows in set (0.01 sec)
+
+mysql-sql> alter table estudiantes drop no_tel;
+ERROR: 1146 (42S02): Table 'prueba.estudiantes' doesn't exist
+mysql-sql> alter table estudiante drop no_tel;
+Query OK, 0 rows affected (0.05 sec)
+
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql-sql> desc estudiante;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| nombre    | varchar(7)  | YES  |     | null    |       |
+| apellido  | varchar(45) | NO   |     |         |       |
+| NoControl | varchar(45) | NO   | PRI |         |       |
+| Carrera   | varchar(45) | NO   |     |         |       |
++-----------+-------------+------+-----+---------+-------+
+4 rows in set (0.01 sec)
+
+mysql-sql> alter table estudiante add column no_tel varchar(50);
+Query OK, 0 rows affected (0.03 sec)
+
+Records: 0  Duplicates: 0  Warnings: 0
+mysql-sql> desc estudiante;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| nombre    | varchar(7)  | YES  |     | null    |       |
+| apellido  | varchar(45) | NO   |     |         |       |
+| NoControl | varchar(45) | NO   | PRI |         |       |
+| Carrera   | varchar(45) | NO   |     |         |       |
+| no_tel    | varchar(50) | YES  |     | null    |       |
++-----------+-------------+------+-----+---------+-------+
+5 rows in set (0.01 sec)
+
+
+

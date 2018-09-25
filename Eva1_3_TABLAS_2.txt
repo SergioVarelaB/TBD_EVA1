@@ -1,0 +1,306 @@
+as crea una replica exacta de la tabla 
+like crea la misma estructura pero sin agregar los registros
+Eva1_3_Tablas_2
+
+
+mysql> show databases
+    -> ;
++------------------------+
+| Database               |
++------------------------+
+| information_schema     |
+| boleto                 |
+| estudiante             |
+| ex                     |
+| mysql                  |
+| prac                   |
+| practica               |
+| practicaene            |
+| proyectopersonal2      |
+| prueba                 |
+| test                   |
+| ticket_master_westeros |
++------------------------+
+12 rows in set (0.01 sec)
+
+mysql> use prueba{
+ERROR 1049 (42000): Unknown database 'prueba{'
+mysql> use prueba
+Database changed
+mysql> show tables
+    -> ;
++------------------+
+| Tables_in_prueba |
++------------------+
+| estudiante       |
++------------------+
+1 row in set (0.00 sec)
+
+mysql> create table carrera(
+    -> nombre int,
+    -> creditos varchar(50),
+    -> zemestres int,
+    -> email varchar(50));
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> desc carrera;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| nombre    | int(11)     | YES  |     | NULL    |       |
+| creditos  | varchar(50) | YES  |     | NULL    |       |
+| zemestres | int(11)     | YES  |     | NULL    |       |
+| email     | varchar(50) | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+4 rows in set (0.01 sec)
+
+mysql> alter table carrera modify nombre varchar(50);// modifica un campo de una tabla
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc carrera;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| nombre    | varchar(50) | YES  |     | NULL    |       |
+| creditos  | varchar(50) | YES  |     | NULL    |       |
+| zemestres | int(11)     | YES  |     | NULL    |       |
+| email     | varchar(50) | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+4 rows in set (0.01 sec)
+
+mysql> alter table carrera change creditos creditos int;
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc carrera;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| nombre    | varchar(50) | YES  |     | NULL    |       |
+| creditos  | int(11)     | YES  |     | NULL    |       |
+| zemestres | int(11)     | YES  |     | NULL    |       |
+| email     | varchar(50) | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+4 rows in set (0.01 sec)
+
+mysql> alter table carrera rename zemestres to semestres ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'to semestres' at line 1
+mysql> alter table carrera rename column zemestres to semestres ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'column zemestres to semestres' at line 1
+mysql>  select version();
++---------------------+
+| version()           |
++---------------------+
+| 5.0.27-community-nt |
++---------------------+
+1 row in set (0.00 sec)
+
+mysql> alter table carrera change zemestres semestres  int;//importante poner el tipo de dato al fial
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc carrera;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| nombre    | varchar(50) | YES  |     | NULL    |       |
+| creditos  | int(11)     | YES  |     | NULL    |       |
+| semestres | int(11)     | YES  |     | NULL    |       |
+| email     | varchar(50) | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+4 rows in set (0.01 sec)
+
+mysql> alter table drop email;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'drop email' at line 1
+mysql> alter table carrera drop email;//especificar de que tabla
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc carrera;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| nombre    | varchar(50) | YES  |     | NULL    |       |
+| creditos  | int(11)     | YES  |     | NULL    |       |
+| semestres | int(11)     | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+3 rows in set (0.01 sec)
+
+mysql> alter table carrera add column area varchar(50);
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc carrera;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| nombre    | varchar(50) | YES  |     | NULL    |       |
+| creditos  | int(11)     | YES  |     | NULL    |       |
+| semestres | int(11)     | YES  |     | NULL    |       |
+| area      | varchar(50) | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+4 rows in set (0.01 sec)
+
+mysql> insert into carrera values ('sistemas' , 500, 9, 'sistemas y computacion');
+Query OK, 1 row affected (0.06 sec)
+
+mysql> insert into carrera values ('sistemas' , 500, 9, 'sistemas y computacion');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into carrera values ('sistemas' , 500, 9, 'sistemas y computacion');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into carrera values ('sistemas' , 500, 9, 'sistemas y computacion');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into carrera values ('sistemas' , 500, 9, 'sistemas y computacion');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into carrera values ('sistemas' , 500, 9, 'sistemas y computacion');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into carrera values ('sistemas' , 500, 9, 'sistemas y computacion');
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into carrera values ('sistemas' , 500, 9, 'sistemas y computacion');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from carrera;
++----------+----------+-----------+------------------------+
+| nombre   | creditos | semestres | area                   |
++----------+----------+-----------+------------------------+
+| sistemas |      500 |         9 | sistemas y computacion |
+| sistemas |      500 |         9 | sistemas y computacion |
+| sistemas |      500 |         9 | sistemas y computacion |
+| sistemas |      500 |         9 | sistemas y computacion |
+| sistemas |      500 |         9 | sistemas y computacion |
+| sistemas |      500 |         9 | sistemas y computacion |
+| sistemas |      500 |         9 | sistemas y computacion |
+| sistemas |      500 |         9 | sistemas y computacion |
++----------+----------+-----------+------------------------+
+8 rows in set (0.00 sec)
+
+mysql> create table nueva_carrera as select * from carrera ;
+Query OK, 8 rows affected (0.01 sec)
+Records: 8  Duplicates: 0  Warnings: 0
+
+mysql> desc nueva_carrera;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| nombre    | varchar(50) | YES  |     | NULL    |       |
+| creditos  | int(11)     | YES  |     | NULL    |       |
+| semestres | int(11)     | YES  |     | NULL    |       |
+| area      | varchar(50) | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> select * from nueva_carrera;
++----------+----------+-----------+------------------------+
+| nombre   | creditos | semestres | area                   |
++----------+----------+-----------+------------------------+
+| sistemas |      500 |         9 | sistemas y computacion |
+| sistemas |      500 |         9 | sistemas y computacion |
+| sistemas |      500 |         9 | sistemas y computacion |
+| sistemas |      500 |         9 | sistemas y computacion |
+| sistemas |      500 |         9 | sistemas y computacion |
+| sistemas |      500 |         9 | sistemas y computacion |
+| sistemas |      500 |         9 | sistemas y computacion |
+| sistemas |      500 |         9 | sistemas y computacion |
++----------+----------+-----------+------------------------+
+8 rows in set (0.00 sec)
+
+mysql> create table nueva_carrerilla like select * from carrera ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'select * from carrera' at line 1
+mysql> create table nueva_carrerilla like carrera ;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> desc nueva_carrerilla;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| nombre    | varchar(50) | YES  |     | NULL    |       |
+| creditos  | int(11)     | YES  |     | NULL    |       |
+| semestres | int(11)     | YES  |     | NULL    |       |
+| area      | varchar(50) | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+4 rows in set (0.01 sec)
+
+mysql> select * from nueva_carrerilla;
+Empty set (0.00 sec)
+
+mysql> show tables
+    -> ;
++------------------+
+| Tables_in_prueba |
++------------------+
+| carrera          |
+| estudiante       |
+| nueva_carrera    |
+| nueva_carrerilla |
++------------------+
+4 rows in set (0.00 sec)
+
+mysql> create table horario( materia varchar(50),
+    -> salon varchar (50),
+    -> profesor varchar(50),
+    -> hora time,
+    -> dia date,
+    -> No_control varchar(10),
+    -> carrera varchar(50);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 7
+mysql> create table horario( materia varchar(50),
+    -> salon varchar (50),
+    -> profesor varchar(50),
+    -> hora time,
+    -> dia date,
+    -> No_control varchar(10),
+    -> carrera varchar(50));
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> desc horario;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| materia    | varchar(50) | YES  |     | NULL    |       |
+| salon      | varchar(50) | YES  |     | NULL    |       |
+| profesor   | varchar(50) | YES  |     | NULL    |       |
+| hora       | time        | YES  |     | NULL    |       |
+| dia        | date        | YES  |     | NULL    |       |
+| No_control | varchar(10) | YES  |     | NULL    |       |
+| carrera    | varchar(50) | YES  |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+7 rows in set (0.01 sec)
+
+mysql> alter table add creditros varchar(3);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'add creditros varchar(3)' at line 1
+mysql> alter table horario add creditros varchar(3);
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table carrera change No_control No_control  varchar(20);
+ERROR 1054 (42S22): Unknown column 'No_control' in 'carrera'
+mysql> alter table horario change No_control No_control  varchar(20);
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table horario add semestre_actual varchar(3);
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc horario;
++-----------------+-------------+------+-----+---------+-------+
+| Field           | Type        | Null | Key | Default | Extra |
++-----------------+-------------+------+-----+---------+-------+
+| materia         | varchar(50) | YES  |     | NULL    |       |
+| salon           | varchar(50) | YES  |     | NULL    |       |
+| profesor        | varchar(50) | YES  |     | NULL    |       |
+| hora            | time        | YES  |     | NULL    |       |
+| dia             | date        | YES  |     | NULL    |       |
+| No_control      | varchar(20) | YES  |     | NULL    |       |
+| carrera         | varchar(50) | YES  |     | NULL    |       |
+| creditros       | varchar(3)  | YES  |     | NULL    |       |
+| semestre_actual | varchar(3)  | YES  |     | NULL    |       |
++-----------------+-------------+------+-----+---------+-------+
+9 rows in set (0.01 sec)

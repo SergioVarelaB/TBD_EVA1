@@ -1,0 +1,76 @@
++-----------+---------------+-------------------------------------------+-------------+-------------+-------------+-------------+-------------+-----------+-------------+---------------+--------------+-----------+------------+-----------------+------------+------------+--------------+------------+-----------------------+------------------+--------------+-----------------+------------------+------------------+----------------+---------------------+--------------------+------------------+----------+------------+-------------+--------------+---------------+-------------+-----------------+----------------------+
+| Host      | User          | Password                                  | Select_priv | Insert_priv | Update_priv | Delete_priv | Create_priv | Drop_priv | Reload_priv | Shutdown_priv | Process_priv | File_priv | Grant_priv | References_priv | Index_priv | Alter_priv | Show_db_priv | Super_priv | Create_tmp_table_priv | Lock_tables_priv | Execute_priv | Repl_slave_priv | Repl_client_priv | Create_view_priv | Show_view_priv | Create_routine_priv | Alter_routine_priv | Create_user_priv | ssl_type | ssl_cipher | x509_issuer | x509_subject | max_questions | max_updates | max_connections | max_user_connections |
++-----------+---------------+-------------------------------------------+-------------+-------------+-------------+-------------+-------------+-----------+-------------+---------------+--------------+-----------+------------+-----------------+------------+------------+--------------+------------+-----------------------+------------------+--------------+-----------------+------------------+------------------+----------------+---------------------+--------------------+------------------+----------+------------+-------------+--------------+---------------+-------------+-----------------+----------------------+
+| localhost | root          | *81F5E21E35407D884A6CD4A731AEBFB6AF209E1B | Y           | Y           | Y           | Y           | Y           | Y         | Y           | Y             | Y            | Y         | Y          | Y               | Y          | Y          | Y            | Y          | Y                     | Y                | Y            | Y               | Y                | Y                | Y              | Y                   | Y                  | Y                |          |            |             |              |             0 |           0 |               0 |                    0 |
+| localhost | Sergio        | *2470C0C06DEE42FD1618BB99005ADCA2EC9D1E19 | N           | N           | N           | N           | N           | N         | N           | N             | N            | N         | N          | N               | N          | N          | N            | N          | N                     | N                | N            | N               | N                | N                | N              | N                   | N                  | N                |          |            |             |              |             0 |           0 |               0 |                    0 |
+| localhost | solo-tablas   | *045C8A3B828B8D7674941C5D03E5961BAB546F9A | N           | N           | N           | N           | N           | N         | N           | N             | N            | N         | N          | N               | N          | N          | N            | N          | N                     | N                | N            | N               | N                | N                | N              | N                   | N                  | N                |          |            |             |              |             0 |           0 |               0 |                    0 |
+| localhost | solo-select   | *045C8A3B828B8D7674941C5D03E5961BAB546F9A | N           | N           | N           | N           | N           | N         | N           | N             | N            | N         | N          | N               | N          | N          | N            | N          | N                     | N                | N            | N               | N                | N                | N              | N                   | N                  | N                |          |            |             |              |             0 |           0 |               0 |                    0 |
+| localhost | usuarioPrueba | *7607B582F66376F728D7375683F85F2F20E37320 | N           | N           | N           | N           | N           | N         | N           | N             | N            | N         | N          | N               | N          | N          | N            | N          | N                     | N                | N            | N               | N                | N                | N              | N                   | N                  | N                |          |            |             |              |             0 |           0 |               0 |                    0 |
++-----------+---------------+-------------------------------------------+-------------+-------------+-------------+-------------+-------------+-----------+-------------+---------------+--------------+-----------+------------+-----------------+------------+------------+--------------+------------+-----------------------+------------------+--------------+-----------------+------------------+------------------+----------------+---------------------+--------------------+------------------+----------+------------+-------------+--------------+---------------+-------------+-----------------+----------------------+
+9 rows in set (0.00 sec)
+mysql-sql> CREATE USER 'usuarioPrueba'@'localhost' IDENTIFIED BY 'prueba';
+Query OK, 0 rows affected (0.08 sec)
+mysql-sql> select users from mysql.user;
+ERROR: 1054 (42S22): Unknown column 'users' in 'field list'
+mysql-sql> select user from mysql.user;
++---------------+
+| user          |
++---------------+
+| Sergio        |
+| root          |
+| solo-select   |
+| solo-tablas   |
+| usuarioPrueba |
++---------------+
+5 rows in set (0.00 sec)
+mysql-sql> GRANT SELECT (nombre, apellido, NoControl) ON prueba.estudiante TO 'usuarioPrueba'@'localhost';
+Query OK, 0 rows affected (0.00 sec)
+mysql-sql> GRANT SELECT (nombre), INSERT (nombre, creditos) ON prueba.materia TO 'usuarioPueba'@'localhost';
+ERROR: 1146 (42S02): Table 'prueba.materia' doesn't exist
+mysql-sql> GRANT SELECT (nombre), INSERT (nombre, creditos) ON prueba.materia TO 'usuarioPueba'@'localhost';
+ERROR: 1133 (42000): Can't find any matching row in the user table
+mysql-sql> GRANT SELECT (nombre), INSERT (nombre, creditos) ON prueba.materia TO 'usuarioPrueba'@'localhost';
+Query OK, 0 rows affected (0.00 sec)
+mysql-sql> GRANT INSERT, UPDATE,CREATE ON life.hobbies TO username@'localhost'
+       ... DROP
+       ... ;
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'DROP' at line 2
+mysql-sql> CREATE
+       ... DROP
+       ... ;
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'DROP' at line 2
+mysql-sql> GRANT INSERT, UPDATE, ON prueba.carrera TO 'usuarioPrueba'@'localhost';
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ON prueba.carrera TO 'usuarioPrueba'@'localhost'' at line 1
+mysql-sql> GRANT INSERT, UPDATE ON prueba.carrera TO 'usuarioPrueba'@'localhost';
+Query OK, 0 rows affected (0.00 sec)
+mysql-sql> GRANT SELECT ON prueba.carrera TO 'usuarioPrueba'@'localhost';
+Query OK, 0 rows affected (0.00 sec)
+mysql-sql> GRANT SELECT ON prueba.PAISES TO 'usuarioPrueba'@'localhost';
+ERROR: 1146 (42S02): Table 'prueba.PAISES' doesn't exist
+mysql-sql> GRANT SELECT ON prueba.PAISES2 TO 'usuarioPrueba'@'localhost';
+Query OK, 0 rows affected (0.00 sec)
+mysql-sql> GRANT Delete ON prueba.personal TO 'usuarioPrueba'@'localhost';
+Query OK, 0 rows affected (0.00 sec)
+mysql-sql> select * from mysql.user;
++-----------+---------------+-------------------------------------------+-------------+-------------+-------------+-------------+-------------+-----------+-------------+---------------+--------------+-----------+------------+-----------------+------------+------------+--------------+------------+-----------------------+------------------+--------------+-----------------+------------------+------------------+----------------+---------------------+--------------------+------------------+----------+------------+-------------+--------------+---------------+-------------+-----------------+----------------------+
+| Host      | User          | Password                                  | Select_priv | Insert_priv | Update_priv | Delete_priv | Create_priv | Drop_priv | Reload_priv | Shutdown_priv | Process_priv | File_priv | Grant_priv | References_priv | Index_priv | Alter_priv | Show_db_priv | Super_priv | Create_tmp_table_priv | Lock_tables_priv | Execute_priv | Repl_slave_priv | Repl_client_priv | Create_view_priv | Show_view_priv | Create_routine_priv | Alter_routine_priv | Create_user_priv | ssl_type | ssl_cipher | x509_issuer | x509_subject | max_questions | max_updates | max_connections | max_user_connections |
++-----------+---------------+-------------------------------------------+-------------+-------------+-------------+-------------+-------------+-----------+-------------+---------------+--------------+-----------+------------+-----------------+------------+------------+--------------+------------+-----------------------+------------------+--------------+-----------------+------------------+------------------+----------------+---------------------+--------------------+------------------+----------+------------+-------------+--------------+---------------+-------------+-----------------+----------------------+
+| localhost | root          | *81F5E21E35407D884A6CD4A731AEBFB6AF209E1B | Y           | Y           | Y           | Y           | Y           | Y         | Y           | Y             | Y            | Y         | Y          | Y               | Y          | Y          | Y            | Y          | Y                     | Y                | Y            | Y               | Y                | Y                | Y              | Y                   | Y                  | Y                |          |            |             |              |             0 |           0 |               0 |                    0 |
+| localhost | Sergio        | *2470C0C06DEE42FD1618BB99005ADCA2EC9D1E19 | N           | N           | N           | N           | N           | N         | N           | N             | N            | N         | N          | N               | N          | N          | N            | N          | N                     | N                | N            | N               | N                | N                | N              | N                   | N                  | N                |          |            |             |              |             0 |           0 |               0 |                    0 |
+| localhost | solo-tablas   | *045C8A3B828B8D7674941C5D03E5961BAB546F9A | N           | N           | N           | N           | N           | N         | N           | N             | N            | N         | N          | N               | N          | N          | N            | N          | N                     | N                | N            | N               | N                | N                | N              | N                   | N                  | N                |          |            |             |              |             0 |           0 |               0 |                    0 |
+| localhost | solo-select   | *045C8A3B828B8D7674941C5D03E5961BAB546F9A | N           | N           | N           | N           | N           | N         | N           | N             | N            | N         | N          | N               | N          | N          | N            | N          | N                     | N                | N            | N               | N                | N                | N              | N                   | N                  | N                |          |            |             |              |             0 |           0 |               0 |                    0 |
+| localhost | usuarioPrueba | *7607B582F66376F728D7375683F85F2F20E37320 | N           | N           | N           | N           | N           | N         | N           | N             | N            | N         | N          | N               | N          | N          | N            | N          | N                     | N                | N            | N               | N                | N                | N              | N                   | N                  | N                |          |            |             |              |             0 |           0 |               0 |                    0 |
++-----------+---------------+-------------------------------------------+-------------+-------------+-------------+-------------+-------------+-----------+-------------+---------------+--------------+-----------+------------+-----------------+------------+------------+--------------+------------+-----------------------+------------------+--------------+-----------------+------------------+------------------+----------------+---------------------+--------------------+------------------+----------+------------+-------------+--------------+---------------+-------------+-----------------+----------------------+
+5 rows in set (0.00 sec)
+mysql-sql> REVOKE ALL, GRANT delete from prueba.carrera To 'usuarioPrueba'@'localhost';
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'delete from prueba.carrera To 'usuarioPrueba'@'localhost'' at line 1
+mysql-sql> REVOKE ALL prueba.carrera To 'usuarioPrueba'@'localhost';
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'prueba.carrera To 'usuarioPrueba'@'localhost'' at line 1
+mysql-sql> REVOKE ALL  from prueba.carrera To 'usuarioPrueba'@'localhost';
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'from prueba.carrera To 'usuarioPrueba'@'localhost'' at line 1
+mysql-sql>
+mysql-sql> REVOKE all ON prueba.carrera FROM 'usuarioPrueba'@'localhost';
+Query OK, 0 rows affected (0.00 sec)
+mysql-sql> GRANT Delete ON prueba.carrera TO 'usuarioPrueba'@'localhost';
+Query OK, 0 rows affected (0.00 sec)
+mysql-sql>
